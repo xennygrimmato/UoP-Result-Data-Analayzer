@@ -32,6 +32,15 @@ with open(os.path.join(CURRENT_DIR, 'out_combined_PICT_MIT.txt'), 'w') as outfil
 
 
 
+#### Function to find the score obtained by maximum number of students
+# Returns list --> [y_val, x_val]
+def getMode(data_x, data_y): # data_x = list(), data_y = list()
+    max_num = max(data_y)
+    mode = data_y.index(max_num)
+    l = [max_num, mode]
+    return l
+####
+
 
 #### Function to find user's rank in a given database
 
@@ -136,9 +145,23 @@ def plotGraph(xRange, yRange, student_db, subField, customLabel):
         number_of_students_with_that_score.append(all_scores_cnt_mit[i])
 
     list_y_axis_mit = number_of_students_with_that_score
-    
+
+    # Plotting global maxima of PICT's data
+    pict_mode_data = getMode(list_x_axis, list_y_axis_pict)
+    pict_mode_y = pict_mode_data[0] # Y axis value
+    pict_mode_x = pict_mode_data[1] # X axis value
+    plt.plot(pict_mode_x, pict_mode_y, 'kD')
+    #
+    # Plotting global maxima of MIT's data
+    mit_mode_data = getMode(list_x_axis, list_y_axis_mit)
+    mit_mode_y = mit_mode_data[0] # Y axis value
+    mit_mode_x = mit_mode_data[1] # X axis value
+    plt.plot(mit_mode_x, mit_mode_y, 'kD')
+    #
+
     plt.plot(list_x_axis, list_y_axis_pict, 'r', label='PICT')
     plt.plot(list_x_axis, list_y_axis_mit, 'b', label='MIT')
+
     plt.title(customLabel)
     plt.ylabel('No. of students')
     plt.xlabel('Marks')
@@ -1088,7 +1111,7 @@ elif main_choice == 2:
                 if choiceMap[choice] == 'TOTAL' :
                     plotGraph(750,5,entc_db,'TOTAL', 'UoP Sem 3 [Entc]')
                 else:
-                    plotGraph(100,20,entc_db,choiceMap[choice], 'UoP Sem 3 [Entc]')    
+                    plotGraph(100,100,entc_db,choiceMap[choice], 'UoP Sem 3 [Entc]')    
     
 
 elif main_choice == 3:
@@ -1135,7 +1158,7 @@ elif main_choice == 3:
                 if choiceMap[choice] == 'TOTAL' :
                     plotGraph(750,5,it_db,'TOTAL','UoP Sem 3 [IT]')
                 else:
-                    plotGraph(100,20,it_db,choiceMap[choice],'UoP Sem 3 [IT]')
+                    plotGraph(100,100,it_db,choiceMap[choice],'UoP Sem 3 [IT]')
 
 elif main_choice == 4:
     comp_db = []
@@ -1182,7 +1205,7 @@ elif main_choice == 4:
                 if choiceMap[choice] == 'TOTAL' :
                     plotGraph(750,6,comp_db,'TOTAL','UoP Sem 3 [Comp]')
                 else:
-                    plotGraph(100,20,comp_db,choiceMap[choice],'UoP Sem 3 [Comp]')
+                    plotGraph(100,100,comp_db,choiceMap[choice],'UoP Sem 3 [Comp]')
     
 else:
     print "Invalid Option"
